@@ -1,4 +1,3 @@
-set nu
 set t_Co=256   " This is may or may not needed.
 
 
@@ -32,8 +31,28 @@ set autoread
 
 set laststatus=2
 set completeopt-=preview
+set tabstop=4
+set shiftwidth=4
+
 set foldmethod=syntax
-set hlsearch   "搜索高亮
+set hlsearch      "搜索高亮
+set scrolloff=10  "底部留10行
+set autowrite
+
+set nu
+set relativenumber
+
+set cursorline
+"hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+
+
+"记住上次光标位置
+if has("autocmd")                                                          
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+endif 
+
+
+
 
 "let g:ycm_rust_src_path = "/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/"
 
