@@ -17,6 +17,9 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'rust-lang/rust.vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'preservim/nerdcommenter'
+
 
 Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
@@ -29,10 +32,16 @@ set background=dark     " 黑暗模式
 colorscheme PaperColor  
 set autoread 		
 
+" delimitMate settings 括号对齐
+let delimitMate_expand_cr = 1  	 "需要backspace包含start,eol
+let delimitMate_expand_space = 1 "需要backspace包含start,eol
+
+
 set laststatus=2
 set completeopt-=preview
 set tabstop=4
 set shiftwidth=4
+set showcmd
 
 set foldmethod=syntax
 set hlsearch      "搜索高亮
@@ -52,6 +61,8 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|
 endif 
 
 
+"netree 自动关闭
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")  && b:NERDTree.isTabTree()) | q | endif
 
 
 "let g:ycm_rust_src_path = "/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/"
@@ -76,3 +87,8 @@ nmap <C-p> :FZF <CR>
 nmap <C-b> :Buffers <CR>
 nmap <Leader>g :YcmCompleter GoToDefinition<CR>
 nmap <Leader>f :YcmCompleter GoToReferences<CR>
+
+"rust
+nnoremap <F5> :!cargo run<CR>
+
+
