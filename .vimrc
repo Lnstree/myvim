@@ -5,10 +5,14 @@ set backspace=indent,eol,start
 syntax on
 set nocompatible                       " 关闭兼容模式
 filetype off                           " 关闭对文件类型的自动检测
-set rtp+=~/.vim/bundle/Vundle.vim      " 加入运行时路径
+"set rtp+=~/.vim/bundle/Vundle.vim      " 加入运行时路径
+set rtp+=~/myvim/Vundle.vim
 call vundle#begin()                    " 初始化" 插件列表开始
 Plugin 'VundleVim/Vundle.vim'          " 插件列表1
 Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'joshdick/onedark.vim'
+Plugin 'frazrepo/vim-rainbow'
+Plugin 'molokai'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'racer-rust/vim-racer'          " 插件列表1
@@ -19,8 +23,6 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'preservim/nerdcommenter'
-
-
 Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
 Plugin 'prabirshrestha/asyncomplete.vim'
@@ -28,8 +30,10 @@ Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 call vundle#end()                      " 完成
 filetype plugin indent on              " 打开文件类型检测
 
-set background=dark     " 黑暗模式
-colorscheme PaperColor  
+"set background=dark     " 黑暗模式
+colorscheme onedark
+"set background=light
+"colorscheme PaperColor  
 set autoread 		
 
 " delimitMate settings 括号对齐
@@ -43,16 +47,15 @@ set tabstop=4
 set shiftwidth=4
 set showcmd
 
-set foldmethod=syntax
+"set foldmethod=syntax
 set hlsearch      "搜索高亮
 set scrolloff=10  "底部留10行
 set autowrite
 
 set nu
-set relativenumber
+"set relativenumber
 
-set cursorline
-"hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"set cursorline
 
 
 "记住上次光标位置
@@ -65,10 +68,9 @@ endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")  && b:NERDTree.isTabTree()) | q | endif
 
 
-"let g:ycm_rust_src_path = "/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/"
-
-let g:ycm_rust_src_path = "/root/rust/src/libstd/"
+let g:ycm_global_ycm_extra_conf="/root/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf=0
+let g:ycm_enable_semantic_highlighting=1
 
 
 if executable('rls')
@@ -76,6 +78,7 @@ if executable('rls')
 	            \ 'name': 'rls',
 	            \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
 	            \ 'whitelist': ['rust'],
+	            \ 'rust-analyzer.cargo.runBuildScripts': 'true',
 	            \ })
 endif 
 
@@ -87,6 +90,7 @@ nmap <C-p> :FZF <CR>
 nmap <C-b> :Buffers <CR>
 nmap <Leader>g :YcmCompleter GoToDefinition<CR>
 nmap <Leader>f :YcmCompleter GoToReferences<CR>
+nmap <Leader>d :YcmDiags<CR>
 
 "rust
 nnoremap <F5> :!cargo run<CR>
